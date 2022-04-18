@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import os
 from random import randint
 
@@ -36,8 +35,8 @@ while option != '4':
       matches = 1
       exit_selected_mode = False
       while not exit_selected_mode:
-        player_one_option = NULL
-        player_two_option = NULL
+        player_one_option = ''
+        player_two_option = ''
         if(option == '1' or option == '2'):
           counter = 0
           while counter < number_of_input_options and not exit_selected_mode:
@@ -57,13 +56,13 @@ while option != '4':
               player_two_option = str(randint(1, 3))
             else:
               counter = number_of_input_options
-            if(player_one_option != NULL and player_one_option != '1' and player_one_option != '2' and player_one_option != '3' or player_two_option != NULL and player_two_option != '1' and player_two_option != '2' and player_two_option != '3'):
+            if(player_one_option != '' and player_one_option != '1' and player_one_option != '2' and player_one_option != '3' or player_two_option != '' and player_two_option != '1' and player_two_option != '2' and player_two_option != '3'):
               exit_selected_mode = True
             counter += 1
         else:
           player_one_option = str(randint(1, 3))
           player_two_option = str(randint(1, 3))
-        if((player_one_option == '1' or player_one_option == '2' or player_one_option == '3') and (player_two_option == '1' or player_two_option == '2' or player_two_option == '3')):
+        if(not exit_selected_mode):
           if(player_one_option == '1' and player_two_option == '3' or player_one_option == '2' and player_two_option == '1' or player_one_option == '3' and player_two_option == '2'):
             player_won = 1
             player_one_points += 1
