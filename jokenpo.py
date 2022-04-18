@@ -1,9 +1,8 @@
+from asyncio.windows_events import NULL
 import os
 from random import randint
 
 option = ''
-error_message = '\nOpção inválida, tente novamente !'
-
 while option != '4':
   os.system('cls||clear')
   print('>(1) Jogador vs Jogador\n')
@@ -37,9 +36,11 @@ while option != '4':
       matches = 1
       exit_selected_mode = False
       while not exit_selected_mode:
+        player_one_option = NULL
+        player_two_option = NULL
         if(option == '1' or option == '2'):
           counter = 0
-          while counter < number_of_input_options:
+          while counter < number_of_input_options and not exit_selected_mode:
             os.system('cls||clear')
             print('>(1) Pedra\n')
             print('>(2) Papel\n')
@@ -55,13 +56,14 @@ while option != '4':
               player_one_option = input('\nEscolha uma opção: ')
               player_two_option = str(randint(1, 3))
             else:
-              exit_selected_mode = True
               counter = number_of_input_options
+            if(player_one_option != NULL and player_one_option != '1' and player_one_option != '2' and player_one_option != '3' or player_two_option != NULL and player_two_option != '1' and player_two_option != '2' and player_two_option != '3'):
+              exit_selected_mode = True
             counter += 1
         else:
           player_one_option = str(randint(1, 3))
           player_two_option = str(randint(1, 3))
-        if(player_one_option == '1' or player_one_option == '2' or player_one_option == '3' and player_two_option == '1' or player_two_option == '2' or player_two_option == '3'):
+        if((player_one_option == '1' or player_one_option == '2' or player_one_option == '3') and (player_two_option == '1' or player_two_option == '2' or player_two_option == '3')):
           if(player_one_option == '1' and player_two_option == '3' or player_one_option == '2' and player_two_option == '1' or player_one_option == '3' and player_two_option == '2'):
             player_won = 1
             player_one_points += 1
@@ -87,6 +89,8 @@ while option != '4':
             player_two_result_option = 'Tesoura'
           os.system('cls||clear')
           print('Resumo da partida:\n')
+          print(
+              f'{player_one_name} ({player_one_points} pontos) vs {player_two_name} ({player_two_points} pontos) \n')
           print(f'{player_one_name} escolheu: {player_one_result_option}\n')
           print(f'{player_two_name} escolheu: {player_two_result_option}\n')
           if(player_won != 0):
@@ -96,8 +100,8 @@ while option != '4':
           print('\nDeseja continuar?\n')
           print('>(1) Sim\n')
           print('Obs: Digite qualquer outra tecla para sair\n')
-          continue_playing = int(input('\nEscolha uma opção: '))
-          if(continue_playing != 1):
+          continue_playing = input('\nEscolha uma opção: ')
+          if(continue_playing != '1'):
             exit_selected_mode = True
           matches += 1
           if(matches == 4):
@@ -114,8 +118,6 @@ while option != '4':
             print(
                 f'Número de empates: {draws}\n')
             input('\n>Digite qualquer tecla para voltar ao menu principal: ')
-        else:
-          exit_selected_mode = True
   else:
     os.system('cls||clear')
     option = '4'
